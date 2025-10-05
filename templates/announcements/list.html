@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Latest Announcements</h2>
+
+    {% for announcement in announcements %}
+    <div class="card mb-3 p-3">
+        <h4>
+            <a href="{% url 'announcement_detail' announcement.id %}" class="text-decoration-none text-dark">
+                {{ announcement.title }}
+            </a>
+        </h4>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

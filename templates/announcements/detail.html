@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ announcement.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h3 class="card-title">{{ announcement.title }}</h3>
+
+      <p id="announcementContent" class="card-text mt-3">
+        {% if announcement.content|length > 50 %}
+          <span id="shortText">{{ announcement.content|slice:":50" }}...</span>
+          <span id="fullText" style="display:none;">{{ announcement.content|safe }}</span>
+        {% else %}
+          <span>{{ announcement.content|safe }}</span>
+        {% endif %}
+      </p>
+
+      {% if announcement.content|length > 50 %}
+        <button id="toggleButton" class="btn btn-link p-0">Read More</button>
+      {% endif %}
+
+      <br><br>
+      <a href="{% url 'announcement_list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggleButton = document.getElementById("toggleButton");
+    const shortText = document.getElementById("shortText");
+    const fullText = document.getElementById("fullText");
+
+    if (toggleButton) {
+      toggleButton.addEventListener("click", function() {
+        if (fullText.style.display === "none") {
+          fullText.style.display = "inline";
+          shortText.style.display = "none";
+          toggleButton.textContent = "Show Less";
+        } else {
+          fullText.style.display = "none";
+          shortText.style.display = "inline";
+          toggleButton.textContent = "Read More";
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}
